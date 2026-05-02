@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tipon 💸
+
+> Personal finance tracking app — built for clarity, designed to scale.
+
+Tipon is a web-based finance tracker that helps you understand where your money goes, where it comes from, and where you stand — without the noise. Built first for personal use, architected to grow into a commercial SaaS product.
+
+---
+
+## Vision
+
+Most finance apps are either too simple (basic spreadsheets) or too complex (full accounting software). Tipon lives in between: fast to use, opinionated in its defaults, and powerful enough for users who care about their financial picture.
+
+**Personal phase:** A private, self-hosted or Supabase-backed tracker for one user.
+**Commercial phase:** Multi-user SaaS with team/family plans, integrations, and a freemium model.
+
+---
+
+## Core Features (v1)
+
+| Feature | Description |
+|---|---|
+| Expense tracking | Log and categorize spending with tags and notes |
+| Income tracking | Track salary, freelance, dividends, and other sources |
+| Reports & analytics | Monthly summaries, trends, category breakdowns, net worth |
+| Dashboard | Live snapshot of balances, recent transactions, budget health |
+
+---
+
+## Tech Stack
+
+| Layer | Choice | Why |
+|---|---|---|
+| Frontend | Next.js 14 (App Router) | Server components, file-based routing, great DX |
+| Database | Supabase (PostgreSQL) | Auth, RLS, real-time, scales to multi-tenant easily |
+| Auth | Supabase Auth | Email/password + social login (Google, GitHub) |
+| Styling | Tailwind CSS + shadcn/ui | Fast, consistent, accessible components |
+| State | Zustand + React Query | Lightweight client state + server sync |
+| Charts | Recharts | Composable, React-native charting |
+| Hosting | Vercel | Zero-config Next.js deploys, edge functions |
+| CI/CD | GitHub Actions | Automated lint, test, deploy pipeline |
+| Package manager | pnpm | Faster installs, disk-efficient |
+
+---
+
+## Project Structure
+
+```
+tipon/
+├── app/                    # Next.js App Router pages
+│   ├── (auth)/             # Login, signup, onboarding
+│   ├── (dashboard)/        # Main app pages (protected)
+│   │   ├── dashboard/
+│   │   ├── transactions/
+│   │   ├── income/
+│   │   └── reports/
+│   └── api/                # API route handlers
+├── components/
+│   ├── ui/                 # shadcn/ui base components
+│   ├── charts/             # Recharts wrappers
+│   └── features/           # Feature-specific components
+├── lib/
+│   ├── supabase/           # Supabase client + server helpers
+│   ├── utils/              # Shared utilities
+│   └── validations/        # Zod schemas
+├── hooks/                  # Custom React hooks
+├── stores/                 # Zustand stores
+├── types/                  # TypeScript type definitions
+├── public/                 # Static assets
+└── supabase/
+    ├── migrations/         # Database migration files
+    └── seed.sql            # Dev seed data
+```
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- pnpm (`npm install -g pnpm`)
+- Supabase account (free tier works)
+- Vercel account (for deployment)
+
+### Local Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clone the repo
+git clone https://github.com/[your-username]/tipon.git
+cd tipon
+
+# Install dependencies
+pnpm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Fill in your Supabase URL and anon key
+
+# Run database migrations
+pnpm supabase db push
+
+# Start dev server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key  # server-side only
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Doc | Purpose |
+|---|---|
+| [ROADMAP.md](./ROADMAP.md) | Phase-by-phase build plan |
+| [MARKET_ANALYSIS.md](./MARKET_ANALYSIS.md) | Competitive landscape and positioning |
+| [DEVELOPMENT_GUIDELINES.md](./DEVELOPMENT_GUIDELINES.md) | Architecture, standards, best practices |
+| [CLAUDE_BUILD_GUIDE.md](./CLAUDE_BUILD_GUIDE.md) | How to use Claude/Cowork to build autonomously |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Private use only until commercial launch. See [LICENSE](./LICENSE) for details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+*Built with Claude Code + Cowork. See [CLAUDE_BUILD_GUIDE.md](./CLAUDE_BUILD_GUIDE.md) for how AI assists throughout the build.*
