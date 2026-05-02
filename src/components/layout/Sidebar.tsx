@@ -23,7 +23,7 @@ export function Sidebar() {
     <>
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -34,18 +34,25 @@ export function Sidebar() {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <div className="flex h-16 shrink-0 items-center justify-between px-6 border-b border-sidebar-border">
-          <span className="text-xl font-bold tracking-tight text-sidebar-foreground">Tipon</span>
+        {/* Logo */}
+        <div className="flex h-16 shrink-0 items-center justify-between px-5 border-b border-sidebar-border">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <span className="text-sm font-bold text-white">T</span>
+            </div>
+            <span className="text-lg font-bold tracking-tight text-sidebar-foreground">Tipon</span>
+          </div>
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden h-8 w-8"
+            className="lg:hidden h-8 w-8 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
             onClick={() => setSidebarOpen(false)}
           >
             <X className="h-4 w-4" />
           </Button>
         </div>
 
+        {/* Nav */}
         <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">
           {nav.map(({ href, label, icon: Icon }) => {
             const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
@@ -55,10 +62,10 @@ export function Sidebar() {
                 href={href}
                 onClick={() => setSidebarOpen(false)}
                 className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all',
                   active
-                    ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                    : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                    ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-sm'
+                    : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground'
                 )}
               >
                 <Icon className="h-4 w-4 shrink-0" />
@@ -68,14 +75,15 @@ export function Sidebar() {
           })}
         </nav>
 
+        {/* User section */}
         <div className="shrink-0 border-t border-sidebar-border p-3">
-          <div className="flex items-center gap-3 rounded-lg px-3 py-2">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sidebar-primary">
-              <span className="text-xs font-semibold text-sidebar-primary-foreground">M</span>
+          <div className="flex items-center gap-3 rounded-lg px-3 py-2.5">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
+              M
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-sidebar-foreground">Mar Anthony</p>
-              <p className="truncate text-xs text-muted-foreground">Personal</p>
+              <p className="truncate text-sm font-semibold text-sidebar-foreground">Mar Anthony</p>
+              <p className="truncate text-xs text-sidebar-foreground/50">Personal · Free</p>
             </div>
           </div>
         </div>

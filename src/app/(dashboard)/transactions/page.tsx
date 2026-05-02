@@ -24,21 +24,27 @@ const typeIcon = {
   transfer: ArrowLeftRight,
 }
 
-const typeStyle = {
-  income: 'bg-emerald-100 text-emerald-600',
-  expense: 'bg-red-50 text-red-500',
-  transfer: 'bg-blue-50 text-blue-500',
+const categoryColors: Record<string, string> = {
+  'Food & Dining': 'bg-orange-100 text-orange-600',
+  'Income':        'bg-emerald-100 text-emerald-600',
+  'Transport':     'bg-blue-100 text-blue-600',
+  'Groceries':     'bg-lime-100 text-lime-700',
+  'Utilities':     'bg-yellow-100 text-yellow-700',
+  'Subscriptions': 'bg-purple-100 text-purple-600',
+  'Health':        'bg-rose-100 text-rose-600',
+  'Shopping':      'bg-pink-100 text-pink-600',
+  'Transfer':      'bg-sky-100 text-sky-600',
 }
 
 const typeColor = {
   income: 'text-emerald-600',
-  expense: '',
-  transfer: 'text-blue-600',
+  expense: 'text-foreground',
+  transfer: 'text-sky-600',
 }
 
 const typePrefix = {
   income: '+',
-  expense: '-',
+  expense: '−',
   transfer: '',
 }
 
@@ -55,36 +61,37 @@ export default function TransactionsPage() {
       <Header title="Transactions" />
       <main className="flex-1 overflow-y-auto p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">{transactions.length} transactions</p>
-          <Button size="sm">
-            <Plus className="h-4 w-4 mr-2" />
+          <p className="text-sm font-medium text-muted-foreground">{transactions.length} transactions</p>
+          <Button size="sm" className="h-8 gap-1.5 text-xs">
+            <Plus className="h-3.5 w-3.5" />
             Add Transaction
           </Button>
         </div>
 
-        <Card>
-          <CardContent className="p-0 divide-y">
+        <Card className="border-0 shadow-sm overflow-hidden">
+          <CardContent className="p-0 divide-y divide-border/60">
             {transactions.map((tx) => {
               const Icon = typeIcon[tx.type as keyof typeof typeIcon]
+              const iconStyle = categoryColors[tx.category] ?? 'bg-muted text-muted-foreground'
               return (
                 <div
                   key={tx.id}
-                  className="flex cursor-pointer items-center gap-4 p-4 transition-colors hover:bg-muted/50"
+                  className="flex cursor-pointer items-center gap-4 px-5 py-3.5 transition-colors hover:bg-muted/40"
                 >
                   <div className={cn(
                     'flex h-9 w-9 shrink-0 items-center justify-center rounded-full',
-                    typeStyle[tx.type as keyof typeof typeStyle]
+                    iconStyle
                   )}>
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium">{tx.description}</p>
+                    <p className="text-sm font-semibold">{tx.description}</p>
                     <p className="text-xs text-muted-foreground">{tx.account} · {tx.date}</p>
                   </div>
-                  <Badge variant="secondary" className="hidden shrink-0 text-xs sm:inline-flex">
+                  <Badge variant="secondary" className="hidden shrink-0 text-xs sm:inline-flex rounded-full">
                     {tx.category}
                   </Badge>
-                  <p className={cn('shrink-0 text-sm font-semibold', typeColor[tx.type as keyof typeof typeColor])}>
+                  <p className={cn('shrink-0 text-sm font-bold tabular-nums', typeColor[tx.type as keyof typeof typeColor])}>
                     {typePrefix[tx.type as keyof typeof typePrefix]}{php(tx.amount)}
                   </p>
                 </div>
