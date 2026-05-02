@@ -57,9 +57,11 @@
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^16.4.0",
-    "supabase": "^2.98.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.5"
+  },
+  "optionalDependencies": {
+    "supabase": "^2.98.0"
   }
 }
